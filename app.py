@@ -14,12 +14,13 @@ stocks = {
     "FAKE3": 200.0
 }
 
-# HTML page with improved debugging
-html = """
+# HTML page with fixed JavaScript and error handling
+html = r"""
 <!DOCTYPE html>
 <html>
 <head>
     <title>Live Synthetic Stock Stream</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo="> <!-- Empty favicon to prevent 404 -->
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         #prices { white-space: pre-wrap; font-family: monospace; }
@@ -39,12 +40,12 @@ html = """
                 const data = await response.json();
                 const pricesDiv = document.getElementById("prices");
                 data.forEach(stock => {
-                    pricesDiv.innerText += `Symbol: ${stock.symbol}, Price: ${stock.price}, Time: ${new Date(stock.timestamp * 1000).toISOString()}\n`;
+                    pricesDiv.innerText += "Symbol: " + stock.symbol + ", Price: " + stock.price + ", Time: " + new Date(stock.timestamp * 1000).toISOString() + "\n";
                 });
                 const lines = pricesDiv.innerText.split("\n");
                 if (lines.length > 100) pricesDiv.innerText = lines.slice(-100).join("\n");
             } catch (error) {
-                document.getElementById("error").innerText = `Fetch error: ${error.message}`;
+                document.getElementById("error").innerText = "Fetch error: " + error.message;
                 console.error("Fetch error:", error);
             }
         }
